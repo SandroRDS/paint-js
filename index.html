@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paint JS</title>
+    <style>
+        body
+        {
+            text-align: center;
+        }
+        canvas
+        {
+            background-color: lightgray;
+        }
+        #grossura
+        {
+            border-radius: 10px;
+            width: 60px;
+            height: 20px;
+            border: 1px solid black;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <button><img src="images/borracha.png" width="20px" onclick="ativarBorracha(true)"></button>
+    <button><img src="images/lapis.png" width="20px" onclick="ativarBorracha(false)"></button>
+    <input type="color" id="cor">
+    <input type="number" id="grossura" value="10" min="1">
+    <canvas width="1280" height="720"></canvas>
+    <script>
+        var tela = document.querySelector("canvas");
+        var desenhar = tela.getContext("2d");
+        var x, y;
+        var cor, contadorDeCores = 0;
+        var pinturaAtiva = false, borracha = false;
+
+        function ativarBorracha(valor)
+        {
+            borracha = valor;
+        }
+
+        function ativarPintura()
+        {
+            if(pinturaAtiva)
+            {
+                pinturaAtiva = false;
+            }
+            else
+            {
+                pinturaAtiva = true;
+            }
+        }
+
+        function capturarPosicao(evento)
+        {
+            x = evento.pageX - tela.offsetLeft;
+            y = evento.pageY - tela.offsetTop;
+            if(pinturaAtiva)
+            {
+                desenharCirculo();
+            }
+        }
+
+        function desenharCirculo()
+        {
+            desenhar.fillStyle = document.getElementById("cor").value;
+            if(borracha)
+            {
+                desenhar.fillStyle = 'lightgray';
+            }
+            var grossura = document.getElementById("grossura").value;
+            desenhar.beginPath();
+            desenhar.arc(x, y, grossura, 0, 2*Math.PI);
+            desenhar.fill();
+        }
+
+        function verificar()
+        {
+            var grossura = document.querySelector("#grossura");
+            if(grossura.value < 1)
+            {
+                grossura.value = 1;
+            }
+        }
+
+        tela.onmousemove = capturarPosicao;
+        tela.onmousedown = ativarPintura;
+        tela.onmouseup = ativarPintura;
+        tela.oncontextmenu = apagar;
+        document.getElementById("grossura").onchange = verificar;
+    </script>
+</body>
+</html>
