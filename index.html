@@ -42,18 +42,6 @@
             borracha = valor;
         }
 
-        function ativarPintura()
-        {
-            if(pinturaAtiva)
-            {
-                pinturaAtiva = false;
-            }
-            else
-            {
-                pinturaAtiva = true;
-            }
-        }
-
         function capturarPosicao(evento)
         {
             x = evento.pageX - tela.offsetLeft;
@@ -87,8 +75,18 @@
         }
 
         tela.onmousemove = capturarPosicao;
-        tela.onmousedown = ativarPintura;
-        tela.onmouseup = ativarPintura;
+        tela.onmousedown = function(){
+            pinturaAtiva = true;
+        };
+
+        tela.onmouseup = function(){
+            pinturaAtiva = false;
+        };
+
+        tela.onmouseout = function(){
+            pinturaAtiva = false;
+        };
+
         tela.oncontextmenu = apagar;
         document.getElementById("grossura").onchange = verificar;
     </script>
