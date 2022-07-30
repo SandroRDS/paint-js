@@ -8,11 +8,21 @@
     <title>Paint JS</title>
 </head>
 <body>
+    <!--Botão: Borracha-->
     <button><img src="images/borracha.png" width="20px" onclick="ativarBorracha(true)"></button>
+    
+    <!--Botão: Lápis-->
     <button><img src="images/lapis.png" width="20px" onclick="ativarBorracha(false)"></button>
+    
+    <!--Input: Paleta de Cores-->
     <input type="color" id="cor">
+    
+    <!--Input: Grossura-->
     <input type="number" id="grossura" value="10" min="1">
+    
+    <!--Canvas: Tela de Pintura-->
     <canvas width="1280" height="720"></canvas>
+    
     <script src="js/funcoes.js"></script>
 </body>
 </html>
